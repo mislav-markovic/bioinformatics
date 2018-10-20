@@ -6,8 +6,6 @@
 
 ## Project specific useful links
 
-[text](https://link)
-
 - [Ukkonen, On-line construction of suffix-trees (PDF)(Article)](http://www.cs.helsinki.fi/u/ukkonen/SuffixT1.pdf)
 - [Suffix trees (Wiki)](http://en.wikipedia.org/wiki/Suffix_tree)
 - [Ukkonen's algorithm (wiki)](https://en.wikipedia.org/wiki/Ukkonen%27s_algorithm)

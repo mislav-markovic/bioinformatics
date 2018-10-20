@@ -10,8 +10,8 @@ Solution for [bioinformatics course](https://www.fer.unizg.hr/en/course/bio) pro
 
 ## Participants
 
-Filip Matijević
-Marko Raguž
-Mislav Marković
+- Filip Matijević
+- Marko Raguž
+- Mislav Marković
 
 ## Mentor
