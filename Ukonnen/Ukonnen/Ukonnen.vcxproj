@@ -152,6 +152,7 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClInclude Include="InputReader.h" />
     <ClInclude Include="pch.h" />
   </ItemGroup>
   <ItemGroup>
