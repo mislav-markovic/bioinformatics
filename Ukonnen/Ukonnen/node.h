@@ -1,11 +1,14 @@
 #ifndef NODE_H
 #define NODE_H
+#include <vector>
 
-class node
+namespace ukonnen
 {
-public:
-	node();
-	~node();
-};
-
-#endif
+	class node
+	{
+		unsigned int from_;
+		unsigned int to_;
+		std::vector<node> children_;
+	};
+}
+#endif //NODE_H

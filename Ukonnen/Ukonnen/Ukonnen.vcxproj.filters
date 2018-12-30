@@ -15,12 +15,6 @@
     </Filter>
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="pch.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="reader_writer.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
     <ClInclude Include="suffix_tree.h">
       <Filter>Header Files</Filter>
     </ClInclude>
@@ -29,13 +23,7 @@
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="pch.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
     <ClCompile Include="Ukonnen.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="reader_writer.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="suffix_tree.cpp">
