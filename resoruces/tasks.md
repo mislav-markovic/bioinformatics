@@ -4,7 +4,10 @@
 
 ### Command line input, file input, main loop that runs algorithm, file output (maybe??)
 
-### Node - ctor and equality testing (operator or method)
+### Node
+#### ctor and equality testing (operator or method)
+#### Add child
+#### Split into two
 
 ### Suffix Tree
 #### Add method (main part of algortihm, should be seperated into several helper functions)
