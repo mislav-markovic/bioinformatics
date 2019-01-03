@@ -2,6 +2,15 @@
 
 const char NON_ACTIVE_EDGE = '\0x';
 
+void suffix_tree::update_active_point_after_insert(char suffix_start)
+{
+	//rule 1
+	if (active_point_.active_node_.is_root_) {
+		active_point_.active_edge_ = suffix_start;
+		active_point_.active_length_--;
+	}
+}
+
 suffix_tree::suffix_tree(std::string const& text) : root_{}, text_{ text }, prev_node_{ nullptr }, remainder_{ 0 }, active_point_{ root_ }, position_{ -1 }
 {
 }
@@ -18,8 +27,8 @@ void suffix_tree::build()
 
 	//symbol that will be added to suffix tree
 	char symbol = text_.at(position_);
-
 	remainder_++;
+	prev_node_ = nullptr;
 
 	//if-else that takes care of updating the active point
 	//if previous suffix was not found in tree
@@ -50,7 +59,19 @@ void suffix_tree::build()
 				active_point_.active_length_++;
 			}
 			else {
-				//TODO insert
+				//split off and insert
+				node n{ position_, position_ + 1, true };
+				active_point_.active_node_.split_off(active_point_.active_length_);
+				active_point_.active_node_.children_.push_back(n);
+				remainder_--;
+
+				//if another node was created during this step, link it to this node
+				if (prev_node_ != nullptr) {
+					prev_node_->suffix_link_ = &active_point_.active_node_;
+				}
+
+				//set this node as last created node
+				prev_node_ = &active_point_.active_node_;
 			}
 		}
 	}
@@ -70,6 +91,7 @@ void suffix_tree::build()
 		remainder_++;
 	}
 }
+
 
 
 

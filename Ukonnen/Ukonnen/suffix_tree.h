@@ -39,6 +39,7 @@ class suffix_tree
 	[[nodiscard]] std::string_view node_value(node const&) const noexcept;
 	//returns child node whose value starts with given symbol
 	[[nodiscard]] node const& get_child(node const& parent, char symbol) const noexcept;
+	void update_active_point_after_insert(char);
 
 public:
 	//default ctor, initializes pointers 

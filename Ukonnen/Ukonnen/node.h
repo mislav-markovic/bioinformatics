@@ -18,7 +18,7 @@ public:
 	node();
 	//leafs define suffixes that go from some point in text to the end of text.
 	//as text grows to_ member of node does not need to be updated
-	const bool is_leaf_;
+	bool is_leaf_;
 	//root node is significant when active node is determined after node splitting occurs
 	const bool is_root_;
 	//pointer to this nodes suffix link, nullptr if no link exists.
@@ -26,8 +26,10 @@ public:
 	//child nodes
 	std::vector<node> children_;
 
-	//modifies this node so that its value is now [from_, at)
-	//creates new node whose value is [at, to_), new node becomes child of this node
+	//modifies this node so that its value is now [from_, from_ + at), this node stops being leaf node
+	//creates new node whose value is [from_ + at, to_), new node becomes child of this node
+	//e.g. node with {from_ : 3, to_ : 7}, after calling split_off(2) node is modified to be node {from_: 3, to_: 5}
+	//and new node is created node {from_: 5, to_: 7}
 	void split_off(unsigned int at);
 };
 #endif //NODE_H
