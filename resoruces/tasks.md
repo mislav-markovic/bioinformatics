@@ -15,7 +15,7 @@
   * Split into two
 
 ### Suffix Tree
-  * Add method (main part of algortihm, should be seperated into several helper functions)
+  * Add method (main part of algortihm, should be seperated into several helper functions) - Mislav
   * Contains method
   * ~~Ctor, dtor~~ - Mislav
 
