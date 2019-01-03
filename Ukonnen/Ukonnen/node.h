@@ -2,6 +2,7 @@
 #define NODE_H
 #include <vector>
 
+//value is [from_, to_)
 class node
 {
 	//start of part of suffix defined by this node
@@ -24,5 +25,9 @@ public:
 	node* suffix_link_;
 	//child nodes
 	std::vector<node> children_;
+
+	//modifies this node so that its value is now [from_, at)
+	//creates new node whose value is [at, to_), new node becomes child of this node
+	void split_off(unsigned int at);
 };
 #endif //NODE_H

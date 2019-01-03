@@ -25,7 +25,7 @@ class suffix_tree
 	//text that is used to construct tree
 	//add method should add to this string
 	//maybe tree shouldn't own text??
-	std::string text_;
+	std::string const& text_;
 	//node constructed in previous step (needed in some steps of algorithm)
 	//non-owning raw pointer, do not free
 	node* prev_node_;
@@ -33,11 +33,20 @@ class suffix_tree
 	unsigned int remainder_;
 	//active point is used in construction of tree
 	active_point_t active_point_;
+	//current position in text
+	unsigned int position_;
+	//returns suffix value contained in node
+	[[nodiscard]] std::string_view node_value(node const&) const noexcept;
+	//returns child node whose value starts with given symbol
+	[[nodiscard]] node const& get_child(node const& parent, char symbol) const noexcept;
+
 public:
 	//default ctor, initializes pointers 
-	suffix_tree();
-	//add symbol as suffix to tree and text
+	suffix_tree(std::string const& text);
+	//add symbol to suffix tree
 	void add(char symbol);
+	//builds suffix tree from text it was initialized.
+	void build();
 	//check if suffix is contained in tree
 	[[nodiscard]] bool contains(std::string const& suffix) const noexcept;
 	//returns view into entire text constructed so far.
