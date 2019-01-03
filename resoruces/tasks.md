@@ -2,17 +2,22 @@
 
 ## Implementation
 
-### Command line input, file input, main loop that runs algorithm, file output (maybe??)
+### Main Loop
+  * Command line input
+  * file input
+  * main loop that iterates over input and constructs tree
+  * file output (maybe??)
 
 ### Node
-#### ctor and equality testing (operator or method)
-#### Add child
-#### Split into two
+  * ~~ctor~~ - Mislav
+  * equality testing (operator or method)
+  * Add child
+  * Split into two
 
 ### Suffix Tree
-#### Add method (main part of algortihm, should be seperated into several helper functions)
-#### Contains method
-#### Ctor, dtor
+  * Add method (main part of algortihm, should be seperated into several helper functions)
+  * Contains method
+  * ~~Ctor, dtor~~ - Mislav
 
 ## Unit testing
 

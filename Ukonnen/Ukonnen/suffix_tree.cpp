@@ -1,20 +1,15 @@
 #include "suffix_tree.h"
 
 
-ukonnen::suffix_tree::suffix_tree()
-{
-}
+namespace ukonnen{
+	const char NON_ACTIVE_EDGE = '\0x';
 
+	suffix_tree::suffix_tree() : root_{*this}, text_{}, prev_node_{nullptr}, remainder_{0}, active_point_{}
+	{
+	}
 
-ukonnen::suffix_tree::~suffix_tree()
-{
-}
+	active_point_t::active_point_t() : active_node_{nullptr}, active_edge_{NON_ACTIVE_EDGE}, active_length_{0}
+	{
+	}
 
-void ukonnen::suffix_tree::add(char symbol)
-{
-}
-
-bool ukonnen::suffix_tree::contains(std::string const &) const noexcept
-{
-	return false;
 }
