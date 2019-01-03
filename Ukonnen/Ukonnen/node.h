@@ -8,8 +8,6 @@ class node
 	unsigned int from_;
 	//end of suffix denoted by this node.
 	unsigned int to_;
-	//root node is significant when active node is determined after node splitting occurs
-	bool is_root_;
 	//ctor that other ctors delegate to
 	node(unsigned int from, unsigned int to, bool is_leaf, bool is_root);
 public:
@@ -17,10 +15,12 @@ public:
 	node(unsigned int from, unsigned int to, bool is_leaf);
 	//ctor for root node
 	node();
-	//pointer to this nodes suffix link, nullptr if no link exists.
 	//leafs define suffixes that go from some point in text to the end of text.
 	//as text grows to_ member of node does not need to be updated
-	bool is_leaf_;
+	const bool is_leaf_;
+	//root node is significant when active node is determined after node splitting occurs
+	const bool is_root_;
+	//pointer to this nodes suffix link, nullptr if no link exists.
 	node* suffix_link_;
 	//child nodes
 	std::vector<node> children_;

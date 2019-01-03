@@ -7,18 +7,19 @@
 //https://stackoverflow.com/questions/9452701/ukkonens-suffix-tree-algorithm-in-plain-english
 struct active_point_t {
 	//non-owning raw pointer, do not free
-	node* active_node_;
+	node& active_node_;
 	//first symbol of a child node of active node.
 	//just first symbol is enough since children are guaranteed to have unique starts of their suffixes.
 	char active_edge_;
 	//how much of child's value is considered.
 	unsigned int active_length_;
 
-	active_point_t();
+	active_point_t(node&);
 };
 
 class suffix_tree
 {
+	//DO NOT CHANGE ORDER OF MEMBERS, unfortunately they are interdependent in their initialization
 	//root of tree
 	node root_;
 	//text that is used to construct tree
@@ -33,7 +34,7 @@ class suffix_tree
 	//active point is used in construction of tree
 	active_point_t active_point_;
 public:
-	//default ctor, inits pointers 
+	//default ctor, initializes pointers 
 	suffix_tree();
 	//add symbol as suffix to tree and text
 	void add(char symbol);
