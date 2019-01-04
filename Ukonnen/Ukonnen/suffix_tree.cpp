@@ -11,6 +11,20 @@ void suffix_tree::update_active_point_after_insert(char suffix_start)
 	}
 }
 
+void suffix_tree::insert(unsigned int from, unsigned int to)
+{
+	node n{ from, to, true };
+	active_point_.active_node_.children_.push_back(n);
+	//TODO: consider changes to active point and remainder
+}
+
+void suffix_tree::split_off_and_insert(unsigned int at, unsigned int from, unsigned int to)
+{
+	this->insert(from, to);
+	active_point_.active_node_.split_off(at);
+	//TODO: consider changes to active point and remainder
+}
+
 suffix_tree::suffix_tree(std::string const& text) : root_{}, text_{ text }, prev_node_{ nullptr }, remainder_{ 0 }, active_point_{ root_ }, position_{ -1 }
 {
 }
@@ -72,6 +86,10 @@ void suffix_tree::build()
 
 				//set this node as last created node
 				prev_node_ = &active_point_.active_node_;
+
+				//update active point
+				active_point_.active_length_--;
+				active_point_.active_edge_ = value;
 			}
 		}
 	}

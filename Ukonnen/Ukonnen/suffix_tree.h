@@ -40,12 +40,15 @@ class suffix_tree
 	//returns child node whose value starts with given symbol
 	[[nodiscard]] node const& get_child(node const& parent, char symbol) const noexcept;
 	void update_active_point_after_insert(char);
+	//add symbol to suffix tree as a child of active node
+	void insert(unsigned int from, unsigned int to);
+	//splits of current active node into parent and child at the given position and inserts new node as a child of parent.
+	void split_off_and_insert(unsigned int at, unsigned int from, unsigned int to);
 
 public:
 	//default ctor, initializes pointers 
 	suffix_tree(std::string const& text);
-	//add symbol to suffix tree
-	void add(char symbol);
+
 	//builds suffix tree from text it was initialized.
 	void build();
 	//check if suffix is contained in tree
