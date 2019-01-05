@@ -20,3 +20,8 @@ index_t node::edge_length() const noexcept
 	//TODO
 	return index_t();
 }
+
+void node::split_off(index_t at)
+{
+	//TODO
+}

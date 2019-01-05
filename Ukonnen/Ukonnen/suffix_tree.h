@@ -56,7 +56,5 @@ public:
 	void build();
 	//check if suffix is contained in tree
 	[[nodiscard]] bool contains(std::string const& suffix) const noexcept;
-	//returns view into entire text constructed so far.
-	[[nodiscard]] std::string_view text() const noexcept;
 };
 #endif //SUFFIX_TREE_H
