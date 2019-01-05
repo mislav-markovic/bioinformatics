@@ -1,34 +1,25 @@
 #include "suffix_tree.h"
 
 const char NON_ACTIVE_EDGE = '\0x';
+const char FINAL_CHAR = '$';
 
-void suffix_tree::update_active_point_after_insert(char suffix_start)
-{
-	//rule 1
-	if (active_point_.active_node_.is_root_) {
-		active_point_.active_edge_ = suffix_start;
-		active_point_.active_length_--;
+
+suffix_tree::suffix_tree(std::string const& text) : root_{ std::move(std::make_shared<node>()) },
+text_{ text }, remainder_{ 0 }, active_point_{ root_ },
+current_position_{ 0 },
+current_end_{ std::move(std::make_shared<index_t>(0)) }
+{ }
+
+void suffix_tree::build() {
+	for (index_t pos = 0; pos < text_.size; ++pos) {
+		char value = text_[pos];
+		(*current_end_)++;
+		if (insert(value)) current_position_ = *current_end_;
 	}
+	if (remainder_ > 0) insert(FINAL_CHAR);
 }
 
-void suffix_tree::insert(unsigned int from, unsigned int to)
-{
-	node n{ from, to, true };
-	active_point_.active_node_.children_.push_back(n);
-	//TODO: consider changes to active point and remainder
-}
-
-void suffix_tree::split_off_and_insert(unsigned int at, unsigned int from, unsigned int to)
-{
-	this->insert(from, to);
-	active_point_.active_node_.split_off(at);
-	//TODO: consider changes to active point and remainder
-}
-
-suffix_tree::suffix_tree(std::string const& text) : root_{}, text_{ text }, prev_node_{ nullptr }, remainder_{ 0 }, active_point_{ root_ }, position_{ -1 }
-{
-}
-
+/*
 void suffix_tree::build()
 {
 	//TODO: loop the code bellow
@@ -109,10 +100,7 @@ void suffix_tree::build()
 		remainder_++;
 	}
 }
+*/
 
-
-
-
-active_point_t::active_point_t(node& active_node) : active_node_{ active_node }, active_edge_{ NON_ACTIVE_EDGE }, active_length_{ 0 }
-{
-}
+active_point_t::active_point_t(child_link_t& active_node) : active_node_{ active_node }, active_edge_{ NON_ACTIVE_EDGE }, active_length_{ 0 }
+{ }

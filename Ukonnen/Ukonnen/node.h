@@ -1,35 +1,46 @@
 #ifndef NODE_H
 #define NODE_H
 #include <vector>
+#include <memory>
 
-//value is [from_, to_)
-class node
+typedef std::shared_ptr<node> child_link_t;
+typedef std::weak_ptr<node> suffix_link_t;
+typedef std::size_t index_t;
+
+//value is [from_, to_) for non-leaf (internal) nodes.
+//leaf nodes have [from_, *text_end_) value.
+//root node has no value.
+//edges are calculated from nodes by suffix tree when needed.
+class node : public std::enable_shared_from_this<node>
 {
-	//start of part of suffix defined by this node
-	unsigned int from_;
+	//start of part of suffix defined by this node.
+	index_t from_;
 	//end of suffix denoted by this node.
-	unsigned int to_;
-	//ctor that other ctors delegate to
-	node(unsigned int from, unsigned int to, bool is_leaf, bool is_root);
+	index_t to_;
+	//end index for leaf nodes.
+	std::shared_ptr<index_t> text_end_;
+	//ctor that other ctors delegate to.
+	node(unsigned int from, unsigned int to, bool is_leaf, bool is_root, suffix_link_t suffix_link);
 public:
-	//ctor for non-root node
-	node(unsigned int from, unsigned int to, bool is_leaf);
+	//ctor for non-root node.
+	node(unsigned int from, unsigned int to, bool is_leaf, suffix_link_t suffix_link);
 	//ctor for root node
 	node();
 	//leafs define suffixes that go from some point in text to the end of text.
 	//as text grows to_ member of node does not need to be updated
 	bool is_leaf_;
-	//root node is significant when active node is determined after node splitting occurs
+	//root node is special case of internal node
 	const bool is_root_;
-	//pointer to this nodes suffix link, nullptr if no link exists.
-	node* suffix_link_;
+	//pointer to this nodes suffix link, by default points to root node
+	suffix_link_t suffix_link_;
 	//child nodes
-	std::vector<node> children_;
+	std::vector<child_link_t> children_;
 
-	//modifies this node so that its value is now [from_, from_ + at), this node stops being leaf node
+	//modifies this node so that its value is now [from_, from_ + at), this node stops being leaf node.
 	//creates new node whose value is [from_ + at, to_), new node becomes child of this node
 	//e.g. node with {from_ : 3, to_ : 7}, after calling split_off(2) node is modified to be node {from_: 3, to_: 5}
 	//and new node is created node {from_: 5, to_: 7}
-	void split_off(unsigned int at);
+	//****void split_off(unsigned int at);
 };
+
 #endif //NODE_H
