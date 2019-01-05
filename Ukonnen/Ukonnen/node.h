@@ -48,7 +48,7 @@ public:
 	//creates new node whose value is [from_ + at, to_), new node becomes child of this node
 	//e.g. node with {from_ : 3, to_ : 7}, after calling split_off(2) node is modified to be node {from_: 3, to_: 5}
 	//and new node is created node {from_: 5, to_: 7}
-	//****void split_off(unsigned int at);
+	void split_off(index_t at);
 };
 
 #endif //NODE_H
