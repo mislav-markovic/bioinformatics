@@ -17,8 +17,10 @@
   * ~~Insert method~~ - Mislav
     * edge method
     * position_active_point
+	* ~~add suffix link~~ - Mislav
   * Contains method
-  * ~~Ctor, dtor~~ - Mislav
+  * ~~Active point~~ - Mislav
+  * ~~ctor, dtor~~ - Mislav
 
 ## Unit testing
   * Node creation (root, leaf)
@@ -33,3 +35,8 @@
 ## Measuring and optimization
 
 ## Documentation
+
+  * Algorithm description
+  * Simple step by step example
+  * Measurements
+  * Conclusion
