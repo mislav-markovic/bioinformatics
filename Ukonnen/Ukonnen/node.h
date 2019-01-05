@@ -4,6 +4,7 @@
 #include <memory>
 
 class node;
+class suffix_tree;
 
 typedef std::shared_ptr<node> child_link_t;
 typedef std::weak_ptr<node> suffix_link_t;
@@ -15,6 +16,8 @@ typedef std::size_t index_t;
 //edges are calculated from nodes by suffix tree when needed.
 class node : public std::enable_shared_from_this<node>
 {
+	//needed so that suffix tree can extract edge value between nodes
+	friend suffix_tree;
 	//start of part of suffix defined by this node.
 	index_t from_;
 	//end of suffix denoted by this node.
@@ -37,6 +40,9 @@ public:
 	suffix_link_t suffix_link_;
 	//child nodes
 	std::unordered_map<char, child_link_t> children_;
+
+	//returns length of edge that connects this node to its parent
+	[[nodiscard]] index_t edge_length() const noexcept;
 
 	//modifies this node so that its value is now [from_, from_ + at), this node stops being leaf node.
 	//creates new node whose value is [from_ + at, to_), new node becomes child of this node

@@ -26,6 +26,12 @@ std::string_view suffix_tree::edge(child_link_t const &) const noexcept
 	return std::string_view();
 }
 
+child_link_t add_suffix_link(child_link_t & prev_node, child_link_t & node) {
+	if (prev_node) {
+		prev_node->suffix_link_ = node;
+	}
+	return node;
+}
 
 bool suffix_tree::insert(char symbol) {
 	remainder_++;
@@ -39,16 +45,43 @@ bool suffix_tree::insert(char symbol) {
 		if (active_point_.active_node_->children_.find(symbol) == active_point_.active_node_->children_.end()) {
 			child_link_t leaf = std::make_shared<node>(0, 0, true, root_, current_end_);
 
-			//if we constructed node in this step already
-			if (prev_node) {
-				prev_node->suffix_link_ = leaf;
-			}
+			//if we constructed node in this step already, add suffix link and change prev_node to last node
+			prev_node = add_suffix_link(prev_node, leaf);
+
+			//add leaf as child (edge) to the active node
+			active_point_.active_node_->children_.emplace(std::make_pair(symbol, std::move(leaf)));
 		}
 		else {
+			child_link_t & child = active_point_.active_node_->children_.at(symbol);
 
+			//if active length is larger then edge length we need to correct active point and run iteration again
+			if (position_active_point(child)) continue;
+
+			//symbol is already contained in tree
+			//we only update active point and try to insert it when suffix grows (i.e. when this method is called next time)
+			if (edge(child).at(child->from_ + active_point_.active_length_) == symbol) {
+				active_point_.active_length_++;
+
+				//smarter people decided that this was important edge case
+				add_suffix_link(prev_node, active_point_.active_node_);
+
+				//inserting failed in this step, try again with added symbol
+				return false;
+			}
+			//symbol is not in the tree, we need to split edge (creating new internal node in process) and add new leaf node
+			else {
+
+			}
 		}
 	}
 	//temp return
+	return false;
+}
+
+bool suffix_tree::position_active_point(child_link_t const &) noexcept
+{
+	//TODO
+	//temp return statement
 	return false;
 }
 
