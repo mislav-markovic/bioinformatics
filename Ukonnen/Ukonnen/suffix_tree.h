@@ -44,6 +44,9 @@ class suffix_tree
 	//active point and remainder are managed by this method.
 	[[nodiscard]] bool insert(char value);
 
+	//adjusts active point if active length is greater or equal to active edge length
+	[[nodiscard]] bool position_active_point(child_link_t const&) noexcept;
+
 public:
 	//default ctor, initializes pointers 
 	suffix_tree(std::string const& text);

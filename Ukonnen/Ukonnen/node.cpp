@@ -14,3 +14,9 @@ node::node(std::shared_ptr<index_t> text_end) : node(0, 0, false, true, std::wea
 {
 	suffix_link_ = weak_from_this();
 }
+
+index_t node::edge_length() const noexcept
+{
+	//TODO
+	return index_t();
+}
