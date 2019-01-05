@@ -3,14 +3,14 @@
 ## Implementation
 
 ### Main Loop
-  * Command line input
+  * Command line input - Marko
   * file input
   * main loop that iterates over input and constructs tree
   * file output (maybe??)
 
 ### Node
   * ~~ctor~~ - Mislav
-  * equality testing (operator or method)
+  * equality testing (operator or method) 
   * Add child
   * Split into two
 
