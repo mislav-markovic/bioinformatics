@@ -3,53 +3,54 @@
 #include <string>
 #include "node.h"
 
+
 //active point data container as used here:
 //https://stackoverflow.com/questions/9452701/ukkonens-suffix-tree-algorithm-in-plain-english
 struct active_point_t {
-	//non-owning raw pointer, do not free
-	node& active_node_;
+	child_link_t& active_node_;
 	//first symbol of a child node of active node.
 	//just first symbol is enough since children are guaranteed to have unique starts of their suffixes.
 	char active_edge_;
 	//how much of child's value is considered.
 	unsigned int active_length_;
 
-	active_point_t(node&);
+	active_point_t(child_link_t&);
 };
 
 class suffix_tree
 {
 	//DO NOT CHANGE ORDER OF MEMBERS, unfortunately they are interdependent in their initialization
 	//root of tree
-	node root_;
+	child_link_t root_;
 	//text that is used to construct tree
 	//add method should add to this string
 	//maybe tree shouldn't own text??
 	std::string const& text_;
-	//node constructed in previous step (needed in some steps of algorithm)
-	//non-owning raw pointer, do not free
-	node* prev_node_;
 	//how many suffixes need to be inserted into tree
 	unsigned int remainder_;
 	//active point is used in construction of tree
 	active_point_t active_point_;
-	//current position in text
-	unsigned int position_;
+	//current position in text, indexes symbol that is start of suffix that needs to be inserted
+	index_t current_position_;
+	//current progress in text, differs from current position when suffix is implicitly found in tree
+	std::shared_ptr<index_t> current_end_;
+
 	//returns suffix value contained in node
-	[[nodiscard]] std::string_view node_value(node const&) const noexcept;
-	//returns child node whose value starts with given symbol
-	[[nodiscard]] node const& get_child(node const& parent, char symbol) const noexcept;
-	void update_active_point_after_insert(char);
-	//add symbol to suffix tree as a child of active node
-	void insert(unsigned int from, unsigned int to);
-	//splits of current active node into parent and child at the given position and inserts new node as a child of parent.
-	void split_off_and_insert(unsigned int at, unsigned int from, unsigned int to);
+	[[nodiscard]] std::string_view edge(child_link_t const&) const noexcept;
+	//returns reference to child node whose value starts with given symbol
+	[[nodiscard]] child_link_t const& get_child(child_link_t const& parent, char symbol) const noexcept;
+	//add symbol to suffix tree as a child of active node.
+	//returns true if suffix is added, and false if it not.
+	//suffix can't be added if it is found in tree, then remainder is increased and this method returns.
+	//active point and remainder are managed by this method.
+	[[nodiscard]] bool insert(char value);
 
 public:
 	//default ctor, initializes pointers 
 	suffix_tree(std::string const& text);
 
 	//builds suffix tree from text it was initialized.
+	//manages current position, current end, calls insert method on every symbol of text.
 	void build();
 	//check if suffix is contained in tree
 	[[nodiscard]] bool contains(std::string const& suffix) const noexcept;
