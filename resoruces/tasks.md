@@ -10,9 +10,7 @@
 
 ### Node
   * ~~ctor~~ - Mislav
-  * equality testing (operator or method) 
-  * Add child
-  * Split into two
+  * ~~Add child~~ - Mislav
 
 ### Suffix Tree
   * Add method (main part of algortihm, should be seperated into several helper functions) - Mislav
