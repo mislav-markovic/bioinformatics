@@ -96,11 +96,9 @@ bool suffix_tree::insert(char symbol) {
 		}
 		else {
 			active_point_.active_node_ = active_point_.active_node_->suffix_link_.lock();
-
 		}
 	}
-	//temp return
-	return false;
+	return true;
 }
 
 bool suffix_tree::position_active_point(child_link_t const &) noexcept
