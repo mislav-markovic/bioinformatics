@@ -4,19 +4,52 @@ const char NON_ACTIVE_EDGE = '\0x';
 const char FINAL_CHAR = '$';
 
 
-suffix_tree::suffix_tree(std::string const& text) : root_{ std::move(std::make_shared<node>()) },
+suffix_tree::suffix_tree(std::string const& text) : root_{ std::make_shared<node>(current_end_) },
 text_{ text }, remainder_{ 0 }, active_point_{ root_ },
 current_position_{ 0 },
-current_end_{ std::move(std::make_shared<index_t>(0)) }
+current_end_{ std::make_shared<index_t>(0) }
 { }
 
 void suffix_tree::build() {
-	for (index_t pos = 0; pos < text_.size; ++pos) {
+	index_t text_size = text_.size();
+	for (index_t pos = 0; pos < text_size; ++pos) {
 		char value = text_[pos];
 		(*current_end_)++;
 		if (insert(value)) current_position_ = *current_end_;
 	}
-	if (remainder_ > 0) insert(FINAL_CHAR);
+	while (remainder_ > 0 && !insert(FINAL_CHAR));
+}
+
+std::string_view suffix_tree::edge(child_link_t const &) const noexcept
+{
+	//TODO
+	return std::string_view();
+}
+
+
+bool suffix_tree::insert(char symbol) {
+	remainder_++;
+	child_link_t prev_node;
+	index_t pos{ current_position_ };
+
+	while (remainder_ > 0) {
+		if (active_point_.active_length_ == 0) active_point_.active_edge_ = symbol;
+
+		//symbol is not found in tree
+		if (active_point_.active_node_->children_.find(symbol) == active_point_.active_node_->children_.end()) {
+			child_link_t leaf = std::make_shared<node>(0, 0, true, root_, current_end_);
+
+			//if we constructed node in this step already
+			if (prev_node) {
+				prev_node->suffix_link_ = leaf;
+			}
+		}
+		else {
+
+		}
+	}
+	//temp return
+	return false;
 }
 
 /*

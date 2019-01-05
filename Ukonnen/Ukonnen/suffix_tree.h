@@ -20,6 +20,11 @@ struct active_point_t {
 class suffix_tree
 {
 	//DO NOT CHANGE ORDER OF MEMBERS, unfortunately they are interdependent in their initialization
+
+	//current position in text, indexes symbol that is start of suffix that needs to be inserted
+	index_t current_position_;
+	//current progress in text, differs from current position when suffix is implicitly found in tree
+	std::shared_ptr<index_t> current_end_;
 	//root of tree
 	child_link_t root_;
 	//text that is used to construct tree
@@ -30,15 +35,9 @@ class suffix_tree
 	unsigned int remainder_;
 	//active point is used in construction of tree
 	active_point_t active_point_;
-	//current position in text, indexes symbol that is start of suffix that needs to be inserted
-	index_t current_position_;
-	//current progress in text, differs from current position when suffix is implicitly found in tree
-	std::shared_ptr<index_t> current_end_;
 
 	//returns suffix value contained in node
 	[[nodiscard]] std::string_view edge(child_link_t const&) const noexcept;
-	//returns reference to child node whose value starts with given symbol
-	[[nodiscard]] child_link_t const& get_child(child_link_t const& parent, char symbol) const noexcept;
 	//add symbol to suffix tree as a child of active node.
 	//returns true if suffix is added, and false if it not.
 	//suffix can't be added if it is found in tree, then remainder is increased and this method returns.

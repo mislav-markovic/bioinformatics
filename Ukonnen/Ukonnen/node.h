@@ -1,7 +1,9 @@
 #ifndef NODE_H
 #define NODE_H
-#include <vector>
+#include <unordered_map> 
 #include <memory>
+
+class node;
 
 typedef std::shared_ptr<node> child_link_t;
 typedef std::weak_ptr<node> suffix_link_t;
@@ -20,12 +22,12 @@ class node : public std::enable_shared_from_this<node>
 	//end index for leaf nodes.
 	std::shared_ptr<index_t> text_end_;
 	//ctor that other ctors delegate to.
-	node(unsigned int from, unsigned int to, bool is_leaf, bool is_root, suffix_link_t suffix_link);
+	node(unsigned int from, unsigned int to, bool is_leaf, bool is_root, suffix_link_t suffix_link, std::shared_ptr<index_t> text_end);
 public:
 	//ctor for non-root node.
-	node(unsigned int from, unsigned int to, bool is_leaf, suffix_link_t suffix_link);
+	node(unsigned int from, unsigned int to, bool is_leaf, suffix_link_t suffix_link, std::shared_ptr<index_t> text_end);
 	//ctor for root node
-	node();
+	node(std::shared_ptr<index_t> text_end);
 	//leafs define suffixes that go from some point in text to the end of text.
 	//as text grows to_ member of node does not need to be updated
 	bool is_leaf_;
@@ -34,7 +36,7 @@ public:
 	//pointer to this nodes suffix link, by default points to root node
 	suffix_link_t suffix_link_;
 	//child nodes
-	std::vector<child_link_t> children_;
+	std::unordered_map<char, child_link_t> children_;
 
 	//modifies this node so that its value is now [from_, from_ + at), this node stops being leaf node.
 	//creates new node whose value is [from_ + at, to_), new node becomes child of this node
