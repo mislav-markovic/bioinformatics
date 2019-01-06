@@ -78,7 +78,8 @@ bool suffix_tree::insert(char symbol) {
 			//symbol is not in the tree, we need to split edge (creating new internal node in process) and add new leaf node
 			else {
 				//split edge, child becomes internal node and gains the remaining part of edge as child node
-				child->split_off(active_point_.active_length_);
+				//i.e. if we split edge abcabcd with active length after first b (2), first node becomes ab, and second becomes cabcd
+				child->split_off(active_point_.active_length_, edge(child).at(child->from_ + active_point_.active_length_));
 				child_link_t leaf = std::make_shared<node>(pos, pos+1, true, root_, current_end_);
 
 				//add leaf as child to new internal node

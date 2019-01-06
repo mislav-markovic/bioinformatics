@@ -21,7 +21,11 @@ index_t node::edge_length() const noexcept
 	return index_t();
 }
 
-void node::split_off(index_t at)
+void node::split_off(index_t at, char symbol_at)
 {
-	//TODO
+	child_link_t second_half_edge = std::make_shared<node>(from_ + at, to_, true, suffix_link_, text_end_);
+
+	to_ = from_ + at;
+	is_leaf_ = false;
+	children_.emplace(std::make_pair(symbol_at, std::move(second_half_edge)));
 }
