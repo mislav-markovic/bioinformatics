@@ -6,11 +6,13 @@
   * Command line input - Marko
   * file input
   * file output (maybe??)
+  * Queries
 
 ### Node
   * ~~ctor~~ - Mislav
   * ~~Add child~~ - Mislav
-  * split_off
+  * ~~split_off~~ - Mislav
+  * edge_length
 
 ### Suffix Tree
   * ~~Build method (iterates over text)~~ - Mislav
