@@ -53,7 +53,8 @@ public:
 
 	//builds suffix tree from text it was initialized.
 	//manages current position, current end, calls insert method on every symbol of text.
-	void build();
+	//return true if suffix tree was successfully completely built, and false if some suffixes remained for insertion   
+	bool build();
 	//check if suffix is contained in tree
 	[[nodiscard]] bool contains(std::string const& suffix) const noexcept;
 };

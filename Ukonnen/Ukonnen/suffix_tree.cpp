@@ -10,14 +10,16 @@ current_position_{ 0 },
 current_end_{ std::make_shared<index_t>(0) }
 { }
 
-void suffix_tree::build() {
+bool suffix_tree::build() {
 	index_t text_size = text_.size();
 	for (index_t pos = 0; pos < text_size; ++pos) {
 		char value = text_[pos];
 		(*current_end_)++;
 		if (insert(value)) current_position_ = *current_end_;
 	}
-	while (remainder_ > 0 && !insert(FINAL_CHAR));
+	if (remainder_ > 0) return insert(FINAL_CHAR);
+
+	return true;
 }
 
 bool suffix_tree::contains(std::string const & suffix) const noexcept
