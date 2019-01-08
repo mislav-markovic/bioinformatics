@@ -3,43 +3,59 @@
 #include <string>
 #include "node.h"
 
+
 //active point data container as used here:
 //https://stackoverflow.com/questions/9452701/ukkonens-suffix-tree-algorithm-in-plain-english
 struct active_point_t {
-	//non-owning raw pointer, do not free
-	node* active_node_;
+	child_link_t& active_node_;
 	//first symbol of a child node of active node.
 	//just first symbol is enough since children are guaranteed to have unique starts of their suffixes.
 	char active_edge_;
 	//how much of child's value is considered.
 	unsigned int active_length_;
 
-	active_point_t();
+	active_point_t(child_link_t&);
 };
 
 class suffix_tree
 {
+	//DO NOT CHANGE ORDER OF MEMBERS, unfortunately they are interdependent in their initialization
+
+	//current position in text, indexes symbol that is start of suffix that needs to be inserted
+	index_t current_position_;
+	//current progress in text, differs from current position when suffix is implicitly found in tree
+	std::shared_ptr<index_t> current_end_;
 	//root of tree
-	node root_;
+	child_link_t root_;
 	//text that is used to construct tree
 	//add method should add to this string
 	//maybe tree shouldn't own text??
-	std::string text_;
-	//node constructed in previous step (needed in some steps of algorithm)
-	//non-owning raw pointer, do not free
-	node* prev_node_;
+	std::string const& text_;
 	//how many suffixes need to be inserted into tree
 	unsigned int remainder_;
 	//active point is used in construction of tree
 	active_point_t active_point_;
+
+	//returns suffix value contained in node
+	[[nodiscard]] std::string_view edge(child_link_t const&) const noexcept;
+	//add symbol to suffix tree as a child of active node.
+	//returns true if suffix is added, and false if it not.
+	//suffix can't be added if it is found in tree, then remainder is increased and this method returns.
+	//active point and remainder are managed by this method.
+	[[nodiscard]] bool insert(char value);
+
+	//adjusts active point if active length is greater or equal to active edge length
+	[[nodiscard]] bool position_active_point(child_link_t const&) noexcept;
+
 public:
-	//default ctor, inits pointers 
-	suffix_tree();
-	//add symbol as suffix to tree and text
-	void add(char symbol);
+	//default ctor, initializes pointers 
+	suffix_tree(std::string const& text);
+
+	//builds suffix tree from text it was initialized.
+	//manages current position, current end, calls insert method on every symbol of text.
+	//return true if suffix tree was successfully completely built, and false if some suffixes remained for insertion   
+	bool build();
 	//check if suffix is contained in tree
 	[[nodiscard]] bool contains(std::string const& suffix) const noexcept;
-	//returns view into entire text constructed so far.
-	[[nodiscard]] std::string_view text() const noexcept;
 };
 #endif //SUFFIX_TREE_H
