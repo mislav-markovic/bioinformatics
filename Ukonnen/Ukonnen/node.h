@@ -30,16 +30,16 @@ public:
 	//ctor for non-root node.
 	node(unsigned int from, unsigned int to, bool is_leaf, suffix_link_t suffix_link, std::shared_ptr<index_t> text_end);
 	//ctor for root node
-	node(std::shared_ptr<index_t> text_end);
+  explicit node(std::shared_ptr<index_t> text_end);
 	//leafs define suffixes that go from some point in text to the end of text.
 	//as text grows to_ member of node does not need to be updated
-	bool is_leaf_;
+	bool is_leaf;
 	//root node is special case of internal node
-	const bool is_root_;
+	const bool is_root;
 	//pointer to this nodes suffix link, by default points to root node
-	suffix_link_t suffix_link_;
+	suffix_link_t suffix_link;
 	//child nodes
-	std::unordered_map<char, child_link_t> children_;
+	std::unordered_map<char, child_link_t> children;
 
 	//returns length of edge that connects this node to its parent
 	[[nodiscard]] index_t edge_length() const noexcept;
