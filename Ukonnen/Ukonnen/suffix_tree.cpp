@@ -24,6 +24,7 @@ bool suffix_tree::build() {
 
 bool suffix_tree::contains(std::string const & suffix) const noexcept
 {
+	
 	//TODO
 	//temp return
 	return false;
@@ -34,6 +35,7 @@ std::string_view suffix_tree::edge(child_link_t const &) const noexcept
 	//TODO
 	return std::string_view();
 }
+
 
 child_link_t add_suffix_link(child_link_t & prev_node, child_link_t & node) {
 	if (prev_node) {
