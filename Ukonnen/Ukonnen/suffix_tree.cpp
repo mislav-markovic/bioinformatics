@@ -29,10 +29,11 @@ bool suffix_tree::contains(std::string const & suffix) const noexcept
 	return false;
 }
 
-std::string_view suffix_tree::edge(child_link_t const &) const noexcept
+std::string suffix_tree::edge(child_link_t const & node) const noexcept
 {
 	//TODO
-	return std::string_view();
+	//input is a node, output is value of string on the edge
+	return text_.substr(node->from_, node->edge_length());
 }
 
 child_link_t add_suffix_link(child_link_t & prev_node, child_link_t & node) {

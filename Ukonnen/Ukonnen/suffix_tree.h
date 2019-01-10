@@ -37,7 +37,7 @@ class suffix_tree
 	active_point_t active_point_;
 
 	//returns suffix value contained in node
-	[[nodiscard]] std::string_view edge(child_link_t const&) const noexcept;
+	[[nodiscard]] std::string edge(child_link_t const&) const noexcept;
 	//add symbol to suffix tree as a child of active node.
 	//returns true if suffix is added, and false if it not.
 	//suffix can't be added if it is found in tree, then remainder is increased and this method returns.
