@@ -7,14 +7,14 @@
 //active point data container as used here:
 //https://stackoverflow.com/questions/9452701/ukkonens-suffix-tree-algorithm-in-plain-english
 struct active_point_t {
-	child_link_t& active_node_;
+	child_link_t& active_node;
 	//first symbol of a child node of active node.
 	//just first symbol is enough since children are guaranteed to have unique starts of their suffixes.
-	char active_edge_;
+	char active_edge;
 	//how much of child's value is considered.
-	unsigned int active_length_;
+	unsigned int active_length;
 
-	active_point_t(child_link_t&);
+  explicit active_point_t(child_link_t&);
 };
 
 class suffix_tree
@@ -42,14 +42,14 @@ class suffix_tree
 	//returns true if suffix is added, and false if it not.
 	//suffix can't be added if it is found in tree, then remainder is increased and this method returns.
 	//active point and remainder are managed by this method.
-	[[nodiscard]] bool insert(char value);
+	[[nodiscard]] bool insert(char symbol);
 
 	//adjusts active point if active length is greater or equal to active edge length
 	[[nodiscard]] bool position_active_point(child_link_t const&) noexcept;
 
 public:
 	//default ctor, initializes pointers 
-	suffix_tree(std::string const& text);
+  explicit suffix_tree(std::string const& text);
 
 	//builds suffix tree from text it was initialized.
 	//manages current position, current end, calls insert method on every symbol of text.
