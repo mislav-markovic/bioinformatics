@@ -71,7 +71,6 @@ bool suffix_tree::contains(std::string const & suffix) const noexcept
 
 std::string suffix_tree::edge(child_link_t const & node) const noexcept
 {
-	//TODO
 	//input is a node, output is value of string on the edge
 	return text_.substr(node->from_, node->edge_length());
 }
@@ -145,7 +144,7 @@ bool suffix_tree::insert(char symbol) {
 	return true;
 }
 
-bool suffix_tree::position_active_point(child_link_t const &) noexcept
+bool suffix_tree::position_active_point(child_link_t const & child) noexcept
 {
 	//TODO
 	//temp return statement
