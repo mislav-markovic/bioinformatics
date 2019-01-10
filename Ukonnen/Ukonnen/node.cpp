@@ -18,8 +18,7 @@ node::node(std::shared_ptr<index_t> text_end) : node(0, 0, false, true, std::wea
 
 index_t node::edge_length() const noexcept
 {
-  //TODO
-  return index_t();
+	return is_leaf ? *text_end_ - from_ : to_ - from_;
 }
 
 void node::split_off(const index_t at, char symbol_at)
