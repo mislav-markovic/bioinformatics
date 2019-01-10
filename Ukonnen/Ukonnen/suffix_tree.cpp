@@ -21,7 +21,7 @@ bool suffix_tree::build() {
 
 	return true;
 }
-
+//pretpostavka radi TESTIRAJ
 bool suffix_tree::contains(std::string const & suffix) const noexcept
 {
 	//TODO
@@ -29,7 +29,7 @@ bool suffix_tree::contains(std::string const & suffix) const noexcept
 	int suff_len{ suffix.length };
 
 	int index{ 0 };
-	child_link_t const & observed_node{root_};
+	child_link_t observed_node{root_};
 
 	while (index < suff_len) {
 		//see if the observed node had an edge that starts with the indexed character
