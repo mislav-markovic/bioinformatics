@@ -25,7 +25,47 @@ bool suffix_tree::build() {
 bool suffix_tree::contains(std::string const & suffix) const noexcept
 {
 	//TODO
-	//temp return
+	std::string temp_string{};
+	int suff_len{ suffix.length };
+
+	int index{ 0 };
+	child_link_t const & observed_node{root_};
+
+	while (index < suff_len) {
+		//see if the observed node had an edge that starts with the indexed character
+		if (observed_node->children.count(suffix[index]) != 0) {
+			//find the edge that starts with the index
+			observed_node = observed_node->children.at(suffix[index]);
+
+			//get the full substring of found node
+			std::string string_temp{ suffix.substr(index, observed_node->edge_length()) };
+
+			//if the substring does not match the edge string value
+			if (string_temp != edge(observed_node)) {
+				//it does not contain
+				return false;
+			}
+			//if it does match, see if that is the leaf
+			else if (observed_node->is_leaf) {
+				//if it is the leaf and we checked the entire string
+				if (index == suff_len - 1) {
+					//we found a substring
+					return true;
+				}
+				else {
+					//we didnt and we overshot the suffix length
+					return false;
+				}
+			}
+			//if this is not the leaf, continue the search
+			else {
+				index += observed_node->edge_length();
+			}					
+		}
+		else {
+			return true;
+		}
+	}
 	return false;
 }
 
