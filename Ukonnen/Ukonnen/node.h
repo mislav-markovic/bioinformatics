@@ -14,7 +14,7 @@ typedef std::size_t index_t;
 //leaf nodes have [from_, *text_end_) value.
 //root node has no value.
 //edges are calculated from nodes by suffix tree when needed.
-class node : public std::enable_shared_from_this<node>
+class node
 {
 	//needed so that suffix tree can extract edge value between nodes
 	friend suffix_tree;
@@ -28,7 +28,7 @@ class node : public std::enable_shared_from_this<node>
 	node(unsigned int from, unsigned int to, bool is_leaf, bool is_root, suffix_link_t suffix_link, std::shared_ptr<index_t> text_end);
 public:
 	//ctor for non-root node.
-	node(unsigned int from, unsigned int to, bool is_leaf, suffix_link_t suffix_link, std::shared_ptr<index_t> text_end);
+	node(unsigned int from, unsigned int to, bool is_leaf, const suffix_link_t& suffix_link, const std::shared_ptr<index_t>& text_end);
 	//ctor for root node
   explicit node(std::shared_ptr<index_t> text_end);
 	//leafs define suffixes that go from some point in text to the end of text.

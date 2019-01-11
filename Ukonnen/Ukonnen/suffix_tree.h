@@ -42,7 +42,7 @@ class suffix_tree
 	//returns true if suffix is added, and false if it not.
 	//suffix can't be added if it is found in tree, then remainder is increased and this method returns.
 	//active point and remainder are managed by this method.
-	[[nodiscard]] bool insert(char symbol);
+	bool insert(char symbol);
 
 	//adjusts active point if active length is greater or equal to active edge length
 	[[nodiscard]] bool position_active_point(child_link_t const&) noexcept;

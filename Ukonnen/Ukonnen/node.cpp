@@ -1,24 +1,24 @@
 #include "node.h"
 #include <utility>
 
-node::node(unsigned int from, unsigned int to, bool is_leaf, bool is_root, suffix_link_t suffix_link, std::shared_ptr<index_t> text_end) : from_{from}, to_{to},
-  text_end_{std::move(text_end)}, is_leaf{is_leaf}, is_root{is_root}, suffix_link{std::move(suffix_link)}, children{}
+node::node(const unsigned int from, const unsigned int to, const bool is_leaf, const bool is_root, suffix_link_t suffix_link,
+           std::shared_ptr<index_t> text_end) : from_{from}, to_{to}, text_end_{std::move(text_end)}, is_leaf{is_leaf}, is_root{is_root},
+  suffix_link{std::move(suffix_link)}
 {
 }
 
-node::node(unsigned int from, unsigned int to, bool is_leaf, suffix_link_t suffix_link, std::shared_ptr<index_t> text_end) : node(
-  from, to, is_leaf, false, suffix_link, text_end)
+node::node(const unsigned int from, const unsigned int to, const bool is_leaf, const suffix_link_t& suffix_link,
+           const std::shared_ptr<index_t>& text_end) : node(from, to, is_leaf, false, suffix_link, text_end)
 {
 }
 
-node::node(std::shared_ptr<index_t> text_end) : node(0, 0, false, true, std::weak_ptr<node>(), text_end)
+node::node(std::shared_ptr<index_t> text_end) : node(0, 0, false, true, std::weak_ptr<node>(), std::move(text_end))
 {
-  suffix_link = weak_from_this();
 }
 
 index_t node::edge_length() const noexcept
 {
-	return is_leaf ? *text_end_ - from_ : to_ - from_;
+  return is_leaf ? *text_end_ - from_ : to_ - from_;
 }
 
 void node::split_off(const index_t at, char symbol_at)

@@ -1,32 +1,36 @@
 #include "suffix_tree.h"
+#include <iostream>
 const char non_active_edge = '\0';
 const char final_char = '$';
 
 suffix_tree::suffix_tree(std::string const& text) : current_position_{0}, current_end_{std::make_shared<index_t>(0)},
   root_{std::make_shared<node>(current_end_)}, text_{text}, remainder_{0}, active_point_{root_}
 {
+	root_->suffix_link = root_;
 }
 
 bool suffix_tree::build()
 {
+  std::cout << "Building tree for string: " << text_ << '\n';
   const index_t text_size = text_.size();
-  for (index_t pos = 0; pos < text_size; ++pos)
+  while(*current_end_ < text_size)
   {
-    const char value = text_[pos];
-    (*current_end_)++;
-    if (insert(value)) current_position_ = *current_end_;
+    const char value = text_[(*current_end_)++];
+	  insert((value));
   }
+
   if (remainder_ > 0) return insert(final_char);
   return true;
-} //pretpostavka radi TESTIRAJ
+} 
+
+//pretpostavka radi TESTIRAJ
 bool suffix_tree::contains(std::string const& suffix) const noexcept
 {
-  //TODO
   std::string temp_string{};
-  index_t suff_len{suffix.length()};
-  int index{0};
+  const index_t suffix_length{suffix.length()};
+  index_t index{0};
   child_link_t observed_node{root_};
-  while (index < suff_len)
+  while (index < suffix_length)
   {
     //see if the observed node had an edge that starts with the indexed character
     if (observed_node->children.count(suffix[index]) != 0)
@@ -45,12 +49,12 @@ bool suffix_tree::contains(std::string const& suffix) const noexcept
       if (observed_node->is_leaf)
       {
         //if it is the leaf and we checked the entire string
-        if (index == suff_len - 1)
+        if (index == suffix_length - 1)
         {
           //we found a substring
           return true;
         }
-        //we didnt and we overshot the suffix length
+        //we didn't and we overshot the suffix length
         return false;
       } 
       //if this is not the leaf, continue the search
@@ -81,20 +85,23 @@ child_link_t add_suffix_link(child_link_t& prev_node, child_link_t& node)
 
 bool suffix_tree::insert(char symbol)
 {
+	std::cout << "Inserting value: " << symbol << '\n';
+
   remainder_++;
   child_link_t prev_node;
-  index_t pos{current_position_};
   while (remainder_ > 0)
   {
     if (active_point_.active_length == 0) active_point_.active_edge = symbol;
     //symbol is not found in tree
-    if (active_point_.active_node->children.find(symbol) == active_point_.active_node->children.end())
+    if (active_point_.active_node->children.count(symbol) == 0)
     {
-      child_link_t leaf = std::make_shared<node>(pos, pos + 1, true, root_, current_end_);
+      child_link_t leaf = std::make_shared<node>(current_position_, current_position_ + 1, true, root_, current_end_);
       //if we constructed node in this step already, add suffix link and change prev_node to last node
       prev_node = add_suffix_link(prev_node, leaf);
       //add leaf as child (edge) to the active node
       active_point_.active_node->children.emplace(std::make_pair(symbol, std::move(leaf)));
+
+	  std::cout << "Inserted leaf" << '\n';
     }
     else
     {
@@ -115,7 +122,7 @@ bool suffix_tree::insert(char symbol)
       //split edge, child becomes internal node and gains the remaining part of edge as child node
       //i.e. if we split edge abcabcd with active length after first b (2), first node becomes ab, and second becomes cabcd
       child->split_off(active_point_.active_length, edge(child).at(child->from_ + active_point_.active_length));
-      child_link_t leaf = std::make_shared<node>(pos, pos + 1, true, root_, current_end_); 
+      child_link_t leaf = std::make_shared<node>(current_position_, current_position_ + 1, true, root_, current_end_);
       //add leaf as child to new internal node
       child->children.emplace(std::make_pair(symbol, std::move(leaf)));                    
       //add suffix link if necessary
@@ -123,10 +130,11 @@ bool suffix_tree::insert(char symbol)
     } 
     //if we got here we inserted something
     remainder_--;
+	  current_position_++;
     if (active_point_.active_node->is_root && active_point_.active_length > 0)
     {
       active_point_.active_length--;
-      active_point_.active_edge = text_.at(current_position_ + 1);
+      active_point_.active_edge = text_.at(current_position_);
     }
     else
     {
@@ -136,13 +144,17 @@ bool suffix_tree::insert(char symbol)
   return true;
 }
 
-bool suffix_tree::position_active_point(child_link_t const& child) noexcept
+bool suffix_tree::position_active_point(child_link_t const& node) noexcept
 {
-  //TODO
-  //temp return statement
+  if(active_point_.active_length >= node->edge_length())
+  {
+	  active_point_.active_length -= node->edge_length();
+	  active_point_.active_node = node;
+	  active_point_.active_edge = text_.at(current_position_ + node->edge_length());
+	  return true;
+  }
   return false;
 }
 
 active_point_t::active_point_t(child_link_t& active_node) : active_node{active_node}, active_edge{non_active_edge}, active_length{0}
-{
-}
+{ }
