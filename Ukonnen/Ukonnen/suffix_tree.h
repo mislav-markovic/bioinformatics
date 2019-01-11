@@ -21,9 +21,7 @@ class suffix_tree
 {
 	//DO NOT CHANGE ORDER OF MEMBERS, unfortunately they are interdependent in their initialization
 
-	//current position in text, indexes symbol that is start of suffix that needs to be inserted
-	index_t current_position_;
-	//current progress in text, differs from current position when suffix is implicitly found in tree
+	//current progress in text
 	std::shared_ptr<index_t> current_end_;
 	//root of tree
 	child_link_t root_;
@@ -48,6 +46,7 @@ class suffix_tree
 	[[nodiscard]] bool position_active_point(child_link_t const&) noexcept;
 
 public:
+	static const char final_char = '$';
 	//default ctor, initializes pointers 
   explicit suffix_tree(std::string const& text);
 
