@@ -41,3 +41,6 @@ Ukonnen/Ukonnen.Tests/Debug/
 /Ukonnen/Ukonnen.Tests/x64/Debug
 /Ukonnen/x64/Debug
 /.vs
+/Ukonnen/Ukonnen/x64/Release
+/Ukonnen/Ukonnen.Tests/x64/Release
+/Ukonnen/x64/Release

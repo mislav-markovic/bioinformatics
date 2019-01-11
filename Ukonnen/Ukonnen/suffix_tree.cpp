@@ -10,7 +10,6 @@ suffix_tree::suffix_tree(std::string const& text) : current_end_{std::make_share
 
 bool suffix_tree::build()
 {
-  std::cout << "Building tree for string: " << text_ << '\n';
   const index_t text_size = text_.size();
   for(; *current_end_ < text_size; ++*current_end_)
   {
@@ -85,8 +84,6 @@ child_link_t add_suffix_link(child_link_t& prev_node, child_link_t& node)
 
 bool suffix_tree::insert(char symbol)
 {
-	std::cout << "Inserting value: " << symbol << '\n';
-
   remainder_++;
   child_link_t prev_node;
   while (remainder_ > 0)
@@ -100,8 +97,6 @@ bool suffix_tree::insert(char symbol)
       prev_node = add_suffix_link(prev_node, leaf);
       //add leaf as child (edge) to the active node
       active_point_.active_node->children.emplace(std::make_pair(symbol, std::move(leaf)));
-
-	  std::cout << "Inserted leaf" << '\n';
     }
     else
     {
