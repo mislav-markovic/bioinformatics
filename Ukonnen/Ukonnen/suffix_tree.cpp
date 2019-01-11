@@ -49,7 +49,7 @@ bool suffix_tree::contains(std::string const& suffix) const noexcept
       if (observed_node->is_leaf)
       {
         //if it is the leaf and we checked the entire string
-        if (index == suffix_length - 1)
+        if (index + string_temp.length() == suffix_length)
         {
           //we found a substring
           return true;
