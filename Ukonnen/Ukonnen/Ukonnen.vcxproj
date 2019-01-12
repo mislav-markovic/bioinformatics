@@ -168,6 +168,7 @@
     <Text Include="100_chars.txt" />
     <Text Include="10k_chars.txt" />
     <Text Include="10mil_chars.txt" />
+    <Text Include="1mil_chars.txt" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
