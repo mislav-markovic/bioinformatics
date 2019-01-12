@@ -7,8 +7,8 @@ node::node(const unsigned int from, const unsigned int to, const bool is_leaf, c
 {
 }
 
-node::node(const unsigned int from, const unsigned int to, const bool is_leaf, const suffix_link_t& suffix_link,
-           const std::shared_ptr<index_t>& text_end) : node(from, to, is_leaf, false, suffix_link, text_end)
+node::node(const unsigned int from, const unsigned int to, const bool is_leaf, suffix_link_t suffix_link,
+           std::shared_ptr<index_t> text_end) : node(from, to, is_leaf, false, std::move(suffix_link), std::move(text_end))
 {
 }
 

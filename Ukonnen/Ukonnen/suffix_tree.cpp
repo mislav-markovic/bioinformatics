@@ -12,12 +12,9 @@ bool suffix_tree::build()
   const index_t text_size = text_.size();
   for(; *current_end_ < text_size; ++*current_end_)
   {
-    const char value = text_[*current_end_];
-	  insert((value));
+	  insert(text_[*current_end_]);
   }
-
-  if (remainder_ > 0) return insert(final_char);
-  return true;
+  return remainder_ == 0;
 } 
 
 //pretpostavka radi TESTIRAJ
@@ -104,7 +101,9 @@ bool suffix_tree::insert(char symbol)
       if (position_active_point(child)) continue;
       //symbol is already contained in tree
       //we only update active point and try to insert it when suffix grows (i.e. when this method is called next time)
-      if (edge(child).at(active_point_.active_length) == symbol)
+
+	  //edge(child).at(active_point_.active_length)
+      if (text_[child->from_ + active_point_.active_length] == symbol)
       {
         active_point_.active_length++;
         //smarter people decided that this was important edge case
@@ -115,7 +114,7 @@ bool suffix_tree::insert(char symbol)
       //symbol is not in the tree, we need to split edge (creating new internal node in process) and add new leaf node
       //split edge, child becomes internal node and gains the remaining part of edge as child node
       //i.e. if we split edge abcabcd with active length after first b (2), first node becomes ab, and second becomes cabcd
-      child->split_off(active_point_.active_length, edge(child).at(active_point_.active_length));
+      child->split_off(active_point_.active_length, text_[child->from_ + active_point_.active_length]);
       child_link_t leaf = std::make_shared<node>(*current_end_, *current_end_, true, root_, current_end_);
       //add leaf as child to new internal node
       child->children.emplace(std::make_pair(symbol, std::move(leaf)));                    

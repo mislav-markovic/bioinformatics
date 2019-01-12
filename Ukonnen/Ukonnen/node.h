@@ -28,7 +28,7 @@ class node
 	node(unsigned int from, unsigned int to, bool is_leaf, bool is_root, suffix_link_t suffix_link, std::shared_ptr<index_t> text_end);
 public:
 	//ctor for non-root node.
-	node(unsigned int from, unsigned int to, bool is_leaf, const suffix_link_t& suffix_link, const std::shared_ptr<index_t>& text_end);
+	node(unsigned int from, unsigned int to, bool is_leaf, suffix_link_t suffix_link, std::shared_ptr<index_t> text_end);
 	//ctor for root node
   explicit node(std::shared_ptr<index_t> text_end);
 	//leafs define suffixes that go from some point in text to the end of text.
