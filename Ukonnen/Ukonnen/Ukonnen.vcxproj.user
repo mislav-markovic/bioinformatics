@@ -13,7 +13,7 @@
     <DebuggerFlavor>WindowsLocalDebugger</DebuggerFlavor>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
-    <LocalDebuggerCommandArguments>D:\Razvoj\GitHub\bioinformatics\Ukonnen\Ukonnen\10mil_chars.txt</LocalDebuggerCommandArguments>
+    <LocalDebuggerCommandArguments>D:\Razvoj\GitHub\bioinformatics\Ukonnen\Ukonnen\1mil_chars.txt</LocalDebuggerCommandArguments>
     <DebuggerFlavor>WindowsLocalDebugger</DebuggerFlavor>
   </PropertyGroup>
 </Project>
