@@ -7,7 +7,7 @@ class node;
 class suffix_tree;
 
 typedef std::shared_ptr<node> child_link_t;
-typedef std::weak_ptr<node> suffix_link_t;
+typedef std::shared_ptr<node> suffix_link_t;
 typedef std::size_t index_t;
 
 //value is [from_, to_) for non-leaf (internal) nodes.

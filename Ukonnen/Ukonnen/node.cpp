@@ -12,7 +12,7 @@ node::node(const unsigned int from, const unsigned int to, const bool is_leaf, c
 {
 }
 
-node::node(std::shared_ptr<index_t> text_end) : node(0, 0, false, true, std::weak_ptr<node>(), std::move(text_end))
+node::node(std::shared_ptr<index_t> text_end) : node(0, 0, false, true, std::shared_ptr<node>(), std::move(text_end))
 {
 }
 

@@ -104,7 +104,7 @@ bool suffix_tree::insert(char symbol)
       if (position_active_point(child)) continue;
       //symbol is already contained in tree
       //we only update active point and try to insert it when suffix grows (i.e. when this method is called next time)
-      if (edge(child).at(child->from_ + active_point_.active_length) == symbol)
+      if (edge(child).at(active_point_.active_length) == symbol)
       {
         active_point_.active_length++;
         //smarter people decided that this was important edge case
@@ -131,7 +131,7 @@ bool suffix_tree::insert(char symbol)
     }
     else
     {
-      active_point_.active_node = active_point_.active_node->suffix_link.lock();
+      active_point_.active_node = active_point_.active_node->suffix_link;
     }
   }
   return true;
