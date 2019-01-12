@@ -1,5 +1,4 @@
 #include "suffix_tree.h"
-#include <iostream>
 const char non_active_edge = '\0';
 
 suffix_tree::suffix_tree(std::string const& text) : current_end_{std::make_shared<index_t>(0)},
@@ -107,9 +106,9 @@ bool suffix_tree::insert(char symbol)
       //we only update active point and try to insert it when suffix grows (i.e. when this method is called next time)
       if (edge(child).at(child->from_ + active_point_.active_length) == symbol)
       {
-        active_point_.active_length++;                         
+        active_point_.active_length++;
         //smarter people decided that this was important edge case
-        add_suffix_link(prev_node, active_point_.active_node);
+        prev_node = add_suffix_link(prev_node, active_point_.active_node);
         //inserting failed in this step, try again with added symbol
         return false;
       } 
@@ -144,7 +143,7 @@ bool suffix_tree::position_active_point(child_link_t const& node) noexcept
   {
 	  active_point_.active_length -= node->edge_length();
 	  active_point_.active_node = node;
-	  active_point_.active_edge = text_.at(*current_end_ - remainder_);
+	  active_point_.active_edge = text_.at(node->from_ + active_point_.active_node->edge_length());
 	  return true;
   }
   return false;

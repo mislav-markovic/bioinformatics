@@ -7,7 +7,7 @@
 //active point data container as used here:
 //https://stackoverflow.com/questions/9452701/ukkonens-suffix-tree-algorithm-in-plain-english
 struct active_point_t {
-	child_link_t& active_node;
+	child_link_t active_node;
 	//first symbol of a child node of active node.
 	//just first symbol is enough since children are guaranteed to have unique starts of their suffixes.
 	char active_edge;

@@ -127,5 +127,87 @@ namespace ukonnen_tests
 			Assert::IsFalse(tree.contains(doesnt_contain_suffix_6));
 		}
 
+		TEST_METHOD(complex_string_1)
+		{
+			std::string input{ "abcabxabcd" };
+			input.push_back(suffix_tree::final_char);
+			std::string contains_suffix_1{ "abcabxabcd" };
+			std::string contains_suffix_2{ "bcabxabcd" };
+			std::string contains_suffix_3{ "cabxabcd" };
+			std::string contains_suffix_4{ "abxabcd" };
+			std::string contains_suffix_5{ "bxabcd" };
+			std::string contains_suffix_6{ "xabcd" };
+			std::string contains_suffix_7{ "abcd" };
+			std::string contains_suffix_8{ "bcd" };
+			std::string contains_suffix_9{ "cd" };
+			std::string contains_suffix_10{ "d" };
+
+			std::string doesnt_contain_suffix_1{ "abcabxabc" };
+			std::string doesnt_contain_suffix_2{ "abcabxab" };
+			std::string doesnt_contain_suffix_3{ "abcabxa" };
+			std::string doesnt_contain_suffix_4{ "abcabx" };
+			std::string doesnt_contain_suffix_5{ "ab" };
+			std::string doesnt_contain_suffix_6{ "cbd" };
+
+			suffix_tree tree{ input };
+			tree.build();
+
+			Assert::IsTrue(tree.contains(contains_suffix_1));
+			Assert::IsTrue(tree.contains(contains_suffix_2));
+			Assert::IsTrue(tree.contains(contains_suffix_3));
+			Assert::IsTrue(tree.contains(contains_suffix_4));
+			Assert::IsTrue(tree.contains(contains_suffix_5));
+			Assert::IsTrue(tree.contains(contains_suffix_6));
+			Assert::IsTrue(tree.contains(contains_suffix_7));
+			Assert::IsTrue(tree.contains(contains_suffix_8));
+			Assert::IsTrue(tree.contains(contains_suffix_9));
+			Assert::IsTrue(tree.contains(contains_suffix_10));
+
+			Assert::IsFalse(tree.contains(doesnt_contain_suffix_1));
+			Assert::IsFalse(tree.contains(doesnt_contain_suffix_2));
+			Assert::IsFalse(tree.contains(doesnt_contain_suffix_3));
+			Assert::IsFalse(tree.contains(doesnt_contain_suffix_4));
+			Assert::IsFalse(tree.contains(doesnt_contain_suffix_5));
+			Assert::IsFalse(tree.contains(doesnt_contain_suffix_6));
+		}
+
+		TEST_METHOD(complex_string_2)
+		{
+			std::string input{ "cdddcdc" };
+			input.push_back(suffix_tree::final_char);
+			std::string contains_suffix_1{ "cdddcdc" };
+			std::string contains_suffix_2{ "dddcdc" };
+			std::string contains_suffix_3{ "ddcdc" };
+			std::string contains_suffix_4{ "dcdc" };
+			std::string contains_suffix_5{ "dc" };
+			std::string contains_suffix_6{ "dc" };
+			std::string contains_suffix_7{ "c" };
+
+			std::string doesnt_contain_suffix_1{ "cc" };
+			std::string doesnt_contain_suffix_2{ "cd" };
+			std::string doesnt_contain_suffix_3{ "ccdc" };
+			std::string doesnt_contain_suffix_4{ "cdddcdcc" };
+			std::string doesnt_contain_suffix_5{ "cdddcd" };
+			std::string doesnt_contain_suffix_6{ "cdddc" };
+
+			suffix_tree tree{ input };
+			tree.build();
+
+			Assert::IsTrue(tree.contains(contains_suffix_1));
+			Assert::IsTrue(tree.contains(contains_suffix_2));
+			Assert::IsTrue(tree.contains(contains_suffix_3));
+			Assert::IsTrue(tree.contains(contains_suffix_4));
+			Assert::IsTrue(tree.contains(contains_suffix_5));
+			Assert::IsTrue(tree.contains(contains_suffix_6));
+			Assert::IsTrue(tree.contains(contains_suffix_7));
+
+			Assert::IsFalse(tree.contains(doesnt_contain_suffix_1));
+			Assert::IsFalse(tree.contains(doesnt_contain_suffix_2));
+			Assert::IsFalse(tree.contains(doesnt_contain_suffix_3));
+			Assert::IsFalse(tree.contains(doesnt_contain_suffix_4));
+			Assert::IsFalse(tree.contains(doesnt_contain_suffix_5));
+			Assert::IsFalse(tree.contains(doesnt_contain_suffix_6));
+		}
+
 	};
 }

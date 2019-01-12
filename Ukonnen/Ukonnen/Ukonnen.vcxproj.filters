@@ -33,4 +33,12 @@
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>
+  <ItemGroup>
+    <Text Include="10mil_chars.txt">
+      <Filter>Resource Files</Filter>
+    </Text>
+    <Text Include="10k_chars.txt">
+      <Filter>Resource Files</Filter>
+    </Text>
+  </ItemGroup>
 </Project>
