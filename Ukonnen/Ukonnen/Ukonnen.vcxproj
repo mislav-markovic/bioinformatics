@@ -164,6 +164,8 @@
     <ClCompile Include="Ukonnen.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <Text Include="100k_chars.txt" />
+    <Text Include="100_chars.txt" />
     <Text Include="10k_chars.txt" />
     <Text Include="10mil_chars.txt" />
   </ItemGroup>

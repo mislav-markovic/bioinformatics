@@ -40,5 +40,11 @@
     <Text Include="10k_chars.txt">
       <Filter>Resource Files</Filter>
     </Text>
+    <Text Include="100_chars.txt">
+      <Filter>Resource Files</Filter>
+    </Text>
+    <Text Include="100k_chars.txt">
+      <Filter>Resource Files</Filter>
+    </Text>
   </ItemGroup>
 </Project>
