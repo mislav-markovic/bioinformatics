@@ -49,5 +49,8 @@
     <Text Include="1mil_chars.txt">
       <Filter>Resource Files</Filter>
     </Text>
+    <Text Include="ecoli.txt">
+      <Filter>Resource Files</Filter>
+    </Text>
   </ItemGroup>
 </Project>
