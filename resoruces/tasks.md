@@ -38,7 +38,7 @@
 
 ## Documentation
 
-  * Algorithm description
-  * Simple step by step example
+  * Algorithm description - Marko
+  * Simple step by step example - Marko
   * Measurements
   * Conclusion
