@@ -1,5 +1,5 @@
 #include "suffix_tree.h"
-
+#include <iostream>
 const char non_active_edge = '\0';
 
 suffix_tree::suffix_tree(std::string const& text) : current_end_{std::make_shared<index_t>(0)},
@@ -74,7 +74,7 @@ child_link_t add_suffix_link(child_link_t& prev_node, child_link_t& node)
 {
   if (prev_node)
   {
-    prev_node->suffix_link = node;
+    if(!node->is_leaf) prev_node->suffix_link = node;
   }
   return node;
 }
