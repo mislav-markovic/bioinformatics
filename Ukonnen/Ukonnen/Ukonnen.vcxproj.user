@@ -5,7 +5,7 @@
     <DebuggerFlavor>WindowsLocalDebugger</DebuggerFlavor>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
-    <LocalDebuggerCommandArguments>D:/Git_Repos/bioinformatics/Ukonnen/Ukonnen/10k_chars.txt</LocalDebuggerCommandArguments>
+    <LocalDebuggerCommandArguments>D:\Razvoj\GitHub\bioinformatics\Ukonnen\Ukonnen\10mil_chars.txt</LocalDebuggerCommandArguments>
     <DebuggerFlavor>WindowsLocalDebugger</DebuggerFlavor>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
@@ -13,7 +13,7 @@
     <DebuggerFlavor>WindowsLocalDebugger</DebuggerFlavor>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
-    <LocalDebuggerCommandArguments>D:/Git_Repos/bioinformatics/Ukonnen/Ukonnen/10k_chars.txt</LocalDebuggerCommandArguments>
+    <LocalDebuggerCommandArguments>D:\Razvoj\GitHub\bioinformatics\Ukonnen\Ukonnen\1k_chars.txt</LocalDebuggerCommandArguments>
     <DebuggerFlavor>WindowsLocalDebugger</DebuggerFlavor>
   </PropertyGroup>
 </Project>
