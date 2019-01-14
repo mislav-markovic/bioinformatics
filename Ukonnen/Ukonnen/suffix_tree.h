@@ -14,7 +14,7 @@ struct active_point_t {
 	//how much of child's value is considered.
 	unsigned int active_length;
 
-  explicit active_point_t(child_link_t&);
+  explicit active_point_t(child_link_t);
 };
 
 class suffix_tree
@@ -55,6 +55,6 @@ public:
 	//return true if suffix tree was successfully completely built, and false if some suffixes remained for insertion   
 	bool build();
 	//check if suffix is contained in tree
-	[[nodiscard]] bool contains(std::string const& suffix) const noexcept;
+	[[nodiscard]] bool contains(std::string const& requested_suffix) const noexcept;
 };
 #endif //SUFFIX_TREE_H

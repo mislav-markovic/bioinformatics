@@ -1,4 +1,5 @@
 #include "suffix_tree.h"
+
 const char non_active_edge = '\0';
 
 suffix_tree::suffix_tree(std::string const& text) : current_end_{std::make_shared<index_t>(0)},
@@ -126,7 +127,7 @@ bool suffix_tree::insert(char symbol)
     if (active_point_.active_node->is_root && active_point_.active_length > 0)
     {
       active_point_.active_length--;
-      active_point_.active_edge = text_.at(*current_end_ - remainder_ + 1);
+      active_point_.active_edge = text_[*current_end_ - remainder_ + 1];
     }
     else
     {
@@ -142,11 +143,11 @@ bool suffix_tree::position_active_point(child_link_t const& node) noexcept
   {
 	  active_point_.active_length -= node->edge_length();
 	  active_point_.active_node = node;
-	  active_point_.active_edge = text_.at(node->from_ + active_point_.active_node->edge_length());
+	  active_point_.active_edge = text_[node->from_ + active_point_.active_node->edge_length()];
 	  return true;
   }
   return false;
 }
 
-active_point_t::active_point_t(child_link_t& active_node) : active_node{active_node}, active_edge{non_active_edge}, active_length{0}
+active_point_t::active_point_t(child_link_t active_node) : active_node{std::move(active_node)}, active_edge{non_active_edge}, active_length{0}
 { }

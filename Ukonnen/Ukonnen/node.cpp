@@ -1,5 +1,4 @@
 #include "node.h"
-#include <utility>
 
 node::node(const unsigned int from, const unsigned int to, const bool is_leaf, const bool is_root, suffix_link_t suffix_link,
            std::shared_ptr<index_t> text_end) : from_{from}, to_{to}, text_end_{std::move(text_end)}, is_leaf{is_leaf}, is_root{is_root},
