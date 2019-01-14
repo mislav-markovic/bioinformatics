@@ -7,7 +7,26 @@ namespace ukonnen_tests
 	TEST_CLASS(suffix_tree_tests)
 	{
 	public:
-		
+
+
+
+		TEST_METHOD(repepative_2) {
+			std::string input{ "ABCDDDDAAABS" };
+			input.push_back(suffix_tree::final_char);
+			std::string contains_suffix_1{ "ABC" };
+			std::string contains_suffix_2{ "ABCD" };
+			std::string contains_suffix_3{ "ABCDDDDA" };
+			std::string contains_suffix_4{ "DDD" };
+
+			suffix_tree tree{ input };
+			tree.build();
+
+			Assert::IsTrue(tree.contains(contains_suffix_1));
+			Assert::IsTrue(tree.contains(contains_suffix_2));
+			Assert::IsTrue(tree.contains(contains_suffix_3));
+			Assert::IsFalse(tree.contains(contains_suffix_4));
+		}
+
 		TEST_METHOD(one_char_string)
 		{
 			std::string input{"A"};
