@@ -8,7 +8,22 @@ namespace ukonnen_tests
 	{
 	public:
 
+		TEST_METHOD(repepative_1) {
+			std::string input{ "AAAAABAAA" };
+			input.push_back(suffix_tree::final_char);
+			std::string contains_suffix_1{ "A" };
+			std::string contains_suffix_2{ "AAB" };
+			std::string contains_suffix_3{ "AAA" };
+			std::string contains_suffix_4{ "AAAA" };
 
+			suffix_tree tree{ input };
+			tree.build();
+
+			Assert::IsTrue(tree.contains(contains_suffix_1));
+			Assert::IsFalse(tree.contains(contains_suffix_2));
+			Assert::IsTrue(tree.contains(contains_suffix_3));
+			Assert::IsTrue(tree.contains(contains_suffix_4));
+		}
 
 		TEST_METHOD(repepative_2) {
 			std::string input{ "ABCDDDDAAABS" };
