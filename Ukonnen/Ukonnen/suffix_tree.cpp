@@ -74,7 +74,7 @@ child_link_t add_suffix_link(child_link_t& prev_node, child_link_t& node)
 {
   if (prev_node)
   {
-    if(!node->is_leaf) prev_node->suffix_link = node;
+     if(!node->is_leaf) prev_node->suffix_link = node;
   }
   return node;
 }
@@ -91,7 +91,7 @@ bool suffix_tree::insert(char symbol)
     {
       child_link_t leaf = std::make_shared<node>(*current_end_, *current_end_, true, root_, current_end_);
       //if we constructed node in this step already, add suffix link and change prev_node to last node
-      prev_node = add_suffix_link(prev_node, leaf);
+
       //add leaf as child (edge) to the active node
       active_point_.active_node->children.emplace(std::make_pair(symbol, std::move(leaf)));
     }
@@ -107,7 +107,9 @@ bool suffix_tree::insert(char symbol)
       {
         active_point_.active_length++;
         //smarter people decided that this was important edge case
+        
         prev_node = add_suffix_link(prev_node, active_point_.active_node);
+        
         //inserting failed in this step, try again with added symbol
         return false;
       } 
