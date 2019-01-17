@@ -103,7 +103,6 @@ bool suffix_tree::insert(char symbol)
       //symbol is already contained in tree
       //we only update active point and try to insert it when suffix grows (i.e. when this method is called next time)
 
-	  //edge(child).at(active_point_.active_length)
       if (text_[child->from_ + active_point_.active_length] == symbol)
       {
         active_point_.active_length++;
