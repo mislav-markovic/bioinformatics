@@ -18,6 +18,58 @@ bool suffix_tree::build()
   return remainder_ == 0;
 } 
 
+//tree print method
+
+void suffix_tree::PrintToConsole() noexcept 
+{
+	child_link_t observed_node{ root_ };
+	std::cout << char(196);
+	std::cout << "ROOT NODE";
+	std::cout << char(196);
+	std::cout << char(233) << std::endl;
+	
+	PrintEdges(root_, 11);
+}
+
+void FinishNode(int len) {
+	std::cout << char(196);
+	std::cout << char(196);
+	std::cout << std::endl;
+}
+void suffix_tree::Tab(int numberOfTabs) {
+
+	for (int i = 0; i < numberOfTabs; ++i)
+		std::cout << " ";
+	std::cout << char(192); // little L
+	std::cout << char(196);
+}
+
+void suffix_tree::PrintEdges(child_link_t node, int numberOfTabs) noexcept {
+	std::unordered_map<char, child_link_t> edges{ node->children };
+	std::unordered_map<char, child_link_t>::iterator it;
+
+	for (it = edges.begin(); it != edges.end(); it++)
+	{
+		Tab(numberOfTabs);
+		std::cout << edge(edges.at(it->first));
+		std::cout << char(196);
+		std::cout << char(233);
+
+		if (node->children.at(it->first)->is_leaf) {
+				std::cout << std::endl;
+				//std::cout << char(196);
+		}
+		else {
+			std::cout
+				<< std::endl;
+			//visit the child node
+			//std::cout << static_cast<int> (size);
+			
+			PrintEdges(node->children.at(it->first), numberOfTabs + 3 + edge(edges.at(it->first)).length());
+		}
+	}
+}
+
 //pretpostavka radi TESTIRAJ
 bool suffix_tree::contains(std::string const& requested_suffix) const noexcept
 {
