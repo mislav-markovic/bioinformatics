@@ -70,7 +70,7 @@ std::string suffix_tree::edge(child_link_t const& node) const noexcept
   return text_.substr(node->from_, node->edge_length());
 }
 
-child_link_t add_suffix_link(child_link_t& prev_node, child_link_t& node)
+child_link_t add_suffix_link(child_link_t prev_node, child_link_t node)
 {
   if (prev_node)
   {
@@ -94,6 +94,8 @@ bool suffix_tree::insert(char symbol)
 
       //add leaf as child (edge) to the active node
       active_point_.active_node->children.emplace(std::make_pair(symbol, std::move(leaf)));
+
+      prev_node = add_suffix_link(prev_node, active_point_.active_node); // rule 2
     }
     else
     {
@@ -117,6 +119,7 @@ bool suffix_tree::insert(char symbol)
       //split edge, child becomes internal node and gains the remaining part of edge as child node
       //i.e. if we split edge abcabcd with active length after first b (2), first node becomes ab, and second becomes cabcd
       child->split_off(active_point_.active_length, text_[child->from_ + active_point_.active_length]);
+      child->suffix_link = root_;
       child_link_t leaf = std::make_shared<node>(*current_end_, *current_end_, true, root_, current_end_);
       //add leaf as child to new internal node
       child->children.emplace(std::make_pair(symbol, std::move(leaf)));                    

@@ -8,27 +8,36 @@ namespace ukonnen_tests
 	{
 	public:
 
-		TEST_METHOD(repepative_1) {
+		TEST_METHOD(repetative_1) {
 			std::string input{ "AAAAABAAA" };
 			input.push_back(suffix_tree::final_char);
 			std::string contains_suffix_1{ "A" };
 			std::string contains_suffix_2{ "AA" };
 			std::string contains_suffix_3{ "AAA" };
       std::string contains_suffix_4{ "BAAA" };
+      std::string contains_suffix_5{ "ABAAA" };
+      std::string contains_suffix_6{ "AABAAA" };
+      std::string contains_suffix_7{ "AAABAAA" };
+      std::string contains_suffix_8{ "AAAAABAAA" };
+
 			std::string doesnt_contain_suffix_1{ "AAAA" };
 
 			suffix_tree tree{ input };
 			tree.build();
 
 			Assert::IsTrue(tree.contains(contains_suffix_1));
-			//Assert::IsTrue(tree.contains(contains_suffix_2));
+			Assert::IsTrue(tree.contains(contains_suffix_2));
 			Assert::IsTrue(tree.contains(contains_suffix_3));
       Assert::IsTrue(tree.contains(contains_suffix_4));
+      Assert::IsTrue(tree.contains(contains_suffix_5));
+      Assert::IsTrue(tree.contains(contains_suffix_6));
+      Assert::IsTrue(tree.contains(contains_suffix_7));
+      Assert::IsTrue(tree.contains(contains_suffix_8));
 
 			Assert::IsFalse(tree.contains(doesnt_contain_suffix_1));
 		}
 
-		TEST_METHOD(repepative_2) {
+		TEST_METHOD(repetative_2) {
 			std::string input{ "ABCDDDDAAABS" };
 			input.push_back(suffix_tree::final_char);
 
@@ -36,6 +45,7 @@ namespace ukonnen_tests
       std::string contains_suffix_2{ "BS" };
       std::string contains_suffix_3{ "ABCDDDDAAABS" };
       std::string contains_suffix_4{ "BCDDDDAAABS" };
+      std::string contains_suffix_5{ "ABS" };
 
 			std::string doesnt_contain_suffix_1{ "ABC" };
 			std::string doesnt_contain_suffix_2{ "ABCD" };
@@ -49,6 +59,7 @@ namespace ukonnen_tests
 			Assert::IsTrue(tree.contains(contains_suffix_2));
 			Assert::IsTrue(tree.contains(contains_suffix_3));
 			Assert::IsTrue(tree.contains(contains_suffix_4));
+      Assert::IsTrue(tree.contains(contains_suffix_5));
 
       Assert::IsFalse(tree.contains(doesnt_contain_suffix_1));
       Assert::IsFalse(tree.contains(doesnt_contain_suffix_2));
