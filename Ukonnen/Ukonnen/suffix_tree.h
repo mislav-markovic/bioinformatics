@@ -54,6 +54,9 @@ public:
 	//manages current position, current end, calls insert method on every symbol of text.
 	//return true if suffix tree was successfully completely built, and false if some suffixes remained for insertion   
 	bool build();
+	void PrintToConsole() noexcept;
+	void Tab(int numberOfTabs);
+	void PrintEdges(child_link_t node, int depth) noexcept;
 	//check if suffix is contained in tree
 	[[nodiscard]] bool contains(std::string const& requested_suffix) const noexcept;
 };
