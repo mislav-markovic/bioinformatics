@@ -21,16 +21,24 @@ index_t node::edge_length() const noexcept
   return is_leaf ? *text_end_ - from_ : to_ - from_;
 }
 
-void node::split_off(const index_t at, char symbol_at)
+//void node::split_off(const index_t at, char symbol_at)
+//{
+//  child_link_t second_half_edge = std::make_shared<node>(from_ + at, to_, is_leaf, suffix_link, text_end_);
+//
+//  //move children to second half
+//  std::move(children.begin(), children.end(), std::inserter(second_half_edge->children, second_half_edge->children.begin()));
+//  //clear my children
+//  children.clear();
+//
+//  to_ = from_ + at;
+//  is_leaf = false;
+//  children.emplace(std::make_pair(symbol_at, std::move(second_half_edge)));
+//}
+
+child_link_t node::split_off(const index_t at)
 {
-  child_link_t second_half_edge = std::make_shared<node>(from_ + at, to_, is_leaf, suffix_link, text_end_);
+  child_link_t first_half_edge = std::make_shared<node>(from_, from_ + at, false, suffix_link, text_end_);
 
-  //move children to second half
-  std::move(children.begin(), children.end(), std::inserter(second_half_edge->children, second_half_edge->children.begin()));
-  //clear my children
-  children.clear();
-
-  to_ = from_ + at;
-  is_leaf = false;
-  children.emplace(std::make_pair(symbol_at, std::move(second_half_edge)));
+  from_ += at;
+  return first_half_edge;
 }

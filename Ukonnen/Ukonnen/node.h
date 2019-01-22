@@ -44,11 +44,9 @@ public:
 	//returns length of edge that connects this node to its parent
 	[[nodiscard]] index_t edge_length() const noexcept;
 
-	//modifies this node so that its value is now [from_, from_ + at), this node stops being leaf node.
-	//creates new node whose value is [from_ + at, to_), new node becomes child of this node
-	//e.g. node with {from_ : 3, to_ : 7}, after calling split_off(2) node is modified to be node {from_: 3, to_: 5}
-	//and new node is created node {from_: 5, to_: 7}
-	void split_off(index_t at, char symbol_at);
+	//modifies this node so that its value is now [from_ + at, to), this node is leaf node.
+	//creates new node whose value is [from_, from_ + at), return this node
+  child_link_t split_off(index_t at);
 };
 
 #endif //NODE_H
