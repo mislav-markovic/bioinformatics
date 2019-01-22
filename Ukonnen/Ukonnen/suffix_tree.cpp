@@ -1,12 +1,14 @@
 #include "suffix_tree.h"
 #include <iostream>
+#include <utility>
 const char non_active_edge = '\0';
 
-suffix_tree::suffix_tree(std::string const& text) : current_end_{std::make_shared<index_t>(0)},
-                                                    root_{std::make_shared<node>(current_end_)}, text_{text},
-                                                    remainder_{0}, active_point_{root_}
+suffix_tree::suffix_tree(std::string text) : current_end_{std::make_shared<index_t>(0)},
+                                             root_{std::make_shared<node>(current_end_)}, text_{std::move(text)},
+                                             remainder_{0}, active_point_{root_}
 {
   root_->suffix_link = root_;
+  text_.push_back(final_char);
 }
 
 bool suffix_tree::build()
@@ -21,54 +23,59 @@ bool suffix_tree::build()
 
 //tree print method
 
-void suffix_tree::PrintToConsole() noexcept 
+void suffix_tree::print_to_console() const noexcept
 {
-	child_link_t observed_node{ root_ };
-	std::cout << char(196);
-	std::cout << "ROOT NODE";
-	std::cout << char(196);
-	std::cout << char(233) << std::endl;
-	
-	PrintEdges(root_, 11);
+  child_link_t observed_node{root_};
+  std::cout << char(196);
+  std::cout << "ROOT NODE";
+  std::cout << char(196);
+  std::cout << char(233) << std::endl;
+
+  print_edges(root_, 11);
 }
 
-void FinishNode(int len) {
-	std::cout << char(196);
-	std::cout << char(196);
-	std::cout << std::endl;
-}
-void suffix_tree::Tab(int numberOfTabs) {
-
-	for (int i = 0; i < numberOfTabs; ++i)
-		std::cout << " ";
-	std::cout << char(192); // little L
-	std::cout << char(196);
+void finish_node(int len)
+{
+  std::cout << char(196);
+  std::cout << char(196);
+  std::cout << std::endl;
 }
 
-void suffix_tree::PrintEdges(child_link_t node, int numberOfTabs) noexcept {
-	std::unordered_map<char, child_link_t> edges{ node->children };
-	std::unordered_map<char, child_link_t>::iterator it;
+void suffix_tree::tab(int number_of_tabs) noexcept
+{
+  for (int i = 0; i < number_of_tabs; ++i)
+    std::cout << " ";
+  std::cout << char(192); // little L
+  std::cout << char(196);
+}
 
-	for (it = edges.begin(); it != edges.end(); it++)
-	{
-		Tab(numberOfTabs);
-		std::cout << edge(edges.at(it->first));
-		std::cout << char(196);
-		std::cout << char(233);
+void suffix_tree::print_edges(child_link_t node, int number_of_tabs) const noexcept
+{
+  std::unordered_map<char, child_link_t> edges{node->children};
+  std::unordered_map<char, child_link_t>::iterator it;
 
-		if (node->children.at(it->first)->is_leaf) {
-				std::cout << std::endl;
-				//std::cout << char(196);
-		}
-		else {
-			std::cout
-				<< std::endl;
-			//visit the child node
-			//std::cout << static_cast<int> (size);
-			
-			PrintEdges(node->children.at(it->first), numberOfTabs + 3 + edge(edges.at(it->first)).length());
-		}
-	}
+  for (it = edges.begin(); it != edges.end(); ++it)
+  {
+    tab(number_of_tabs);
+    std::cout << edge(edges.at(it->first));
+    std::cout << char(196);
+    std::cout << char(233);
+
+    if (node->children.at(it->first)->is_leaf)
+    {
+      std::cout << std::endl;
+      //std::cout << char(196);
+    }
+    else
+    {
+      std::cout
+        << std::endl;
+      //visit the child node
+      //std::cout << static_cast<int> (size);
+
+      print_edges(node->children.at(it->first), number_of_tabs + 3 + edge(edges.at(it->first)).length());
+    }
+  }
 }
 
 //pretpostavka radi TESTIRAJ
@@ -123,7 +130,7 @@ std::string suffix_tree::edge(child_link_t const& node) const noexcept
   return text_.substr(node->from_, node->edge_length());
 }
 
-child_link_t add_suffix_link(child_link_t prev_node, child_link_t node)
+child_link_t add_suffix_link(child_link_t const& prev_node, child_link_t node)
 {
   if (prev_node)
   {
